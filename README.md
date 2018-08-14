@@ -13,8 +13,8 @@ A simple module to request an Access Token from a Keycloak Server.
 | --------------- | ------------- |
 | License:        | Apache-2.0 |
 | Build:          | make |
-| Documentation:  | http://bucharest-gold.github.io/keycloak-request-token/ |
-| Issue tracker:  | https://github.com/bucharest-gold/keycloak-request-token/issues |
+| Documentation:  | https://www.keycloak.org/keycloak-request-token |
+| Issue tracker:  | https://github.com/keycloak/keycloak-request-token/issues |
 | Engines:        | Node.js 4.x, 6.x, 8.x |
 
 ## Installation

@@ -19,6 +19,7 @@ const tokenUrl = 'protocol/openid-connect/token';
   @param {string} settings.password - The password to login to the keycloak server - ex: *****
   @param {string} settings.grant_type - the type of authentication mechanism - ex: password,
   @param {string} settings.client_id - the id of the client that is registered with Keycloak to connect to - ex: admin-cli
+  @param {string} settings.client_secret - the service account secret, only used if grant_type = "client_credentials"
   @param {string} settings.realmName - the name of the realm to login to - defaults to 'masterg'
   @returns {Promise} A promise that will resolve with the Access Token String.
   @instance
@@ -26,11 +27,21 @@ const tokenUrl = 'protocol/openid-connect/token';
 
   const tokenRequester = require('keycloak-request-token')
   const baseUrl = 'http://127.0.0.1:8080/auth'
+  
+  // ADMIN
   const settings = {
       username: 'admin',
       password: 'admi',
       grant_type: 'password',
       client_id: 'admin-cli'
+  }
+
+  // SERVICE ACCOUNT
+  const settings = {
+      grant_type: 'client_credentials',
+      client_id: 'service_accountid',
+      client_secret: 'a200cdf6-ad72-4f6c-af73-5b8e1cc48876'
+      realm: 'demo'
   }
 
   tokenRequester(baseUrl, settings)
@@ -54,7 +65,17 @@ function getToken (baseUrl, settings) {
 
     options.method = 'POST';
 
-    options.data = settings;
+    if (settings.grant_type === 'client_credentials') {
+      const base64Auth = Buffer.from(`${settings.client_id}:${settings.client_secret}`)
+        .toString('base64');
+      options.headers.Authorization = `Basic ${base64Auth}`;
+      
+      options.data = {
+        grant_type: settings.grant_type
+      };
+    } else {
+      options.data = settings;
+    }
 
     const caller = (options.protocol === 'https:') ? https : http;
     const data = [];

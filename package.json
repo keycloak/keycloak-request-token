@@ -17,10 +17,12 @@
   "author": {
     "name": "Red Hat, Inc."
   },
-  "maintainers": {
-    "name": "Lucas Holmquist",
-    "email": "lholmqui@redhat.com"
-  },
+  "maintainers": [
+    {
+      "name": "Lucas Holmquist",
+      "email": "lholmqui@redhat.com"
+    }
+  ],
   "engines": {
     "node": ">= 4.0.0"
   },
